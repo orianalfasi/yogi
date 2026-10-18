@@ -251,17 +251,14 @@
   }
 }
 
-.practice-flow-wait {
-  opacity: 0;
-  transform: translateY(10px);
-}
-
-.practice-flow.practice-flow-reveal {
-  opacity: 1;
-  transform: none;
-  transition:
-    opacity 400ms cubic-bezier(0.22, 1, 0.36, 1),
-    transform 400ms cubic-bezier(0.22, 1, 0.36, 1);
+@media (hover: none) {
+  @supports (animation-timeline: view()) {
+    .practice-flow {
+      animation: practice-card-in 1s linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 100%;
+    }
+  }
 }
 
 .practice-soon {
@@ -286,16 +283,21 @@
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .practice-column {
-    animation: none;
+@keyframes practice-card-in {
+  from {
+    opacity: 0.35;
+    transform: translateY(8px);
   }
-
-  .practice-flow-wait,
-  .practice-flow-reveal {
+  to {
     opacity: 1;
     transform: none;
-    transition: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .practice-column,
+  .practice-flow {
+    animation: none;
   }
 
   .practice-flow:not(.practice-flow-later):hover {

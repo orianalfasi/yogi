@@ -1,96 +1,14 @@
-import { useLayoutEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { flows } from "../poses/index.ts";
 import poseDrawing from "../assets/yoga-pose.svg";
 import "./PracticeScreen.css";
 
-const REVEAL_MS = 400;
-const STAGGER_MS = 45;
-
 export function PracticeScreen() {
   const [openName, setOpenName] = useState<string | null>(null);
-  const flowsRef = useRef<HTMLElement>(null);
 
   function toggleFlow(name: string) {
     setOpenName((current) => (current === name ? null : name));
   }
-
-  useLayoutEffect(() => {
-    const root = flowsRef.current;
-    if (root === null || typeof IntersectionObserver === "undefined") {
-      return;
-    }
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      return;
-    }
-
-    const cards = [...root.querySelectorAll<HTMLElement>(".practice-flow")];
-    const waiting = cards.filter((card) => {
-      const rect = card.getBoundingClientRect();
-      const inView = rect.bottom > 0 && rect.top < window.innerHeight;
-      return !inView;
-    });
-
-    for (const card of waiting) {
-      card.classList.add("practice-flow-wait");
-    }
-
-    if (waiting.length === 0) {
-      return;
-    }
-
-    const timers = new Set<number>();
-
-    const finish = (card: HTMLElement) => {
-      card.style.transitionDelay = "";
-      card.classList.remove("practice-flow-wait", "practice-flow-reveal");
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      const entering = entries.filter((entry) => entry.isIntersecting);
-      entering.forEach((entry, index) => {
-        const card = entry.target;
-        if (!(card instanceof HTMLElement)) {
-          return;
-        }
-        const delay = index * STAGGER_MS;
-        card.style.transitionDelay = `${delay}ms`;
-        card.classList.add("practice-flow-reveal");
-        observer.unobserve(card);
-        const timer = window.setTimeout(
-          () => {
-            finish(card);
-            timers.delete(timer);
-          },
-          REVEAL_MS + delay + 80,
-        );
-        timers.add(timer);
-        const onEnd = (event: TransitionEvent) => {
-          if (event.target !== card) {
-            return;
-          }
-          window.clearTimeout(timer);
-          timers.delete(timer);
-          card.removeEventListener("transitionend", onEnd);
-          finish(card);
-        };
-        card.addEventListener("transitionend", onEnd);
-      });
-    });
-
-    for (const card of waiting) {
-      observer.observe(card);
-    }
-
-    return () => {
-      observer.disconnect();
-      for (const timer of timers) {
-        window.clearTimeout(timer);
-      }
-      for (const card of waiting) {
-        finish(card);
-      }
-    };
-  }, []);
 
   return (
     <main className="practice-screen">
@@ -113,7 +31,6 @@ export function PracticeScreen() {
           </div>
         </header>
         <section
-          ref={flowsRef}
           className="practice-flows"
           aria-labelledby="practice-flows-heading"
         >
