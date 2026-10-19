@@ -26,7 +26,7 @@
 
   font: 18px/145% var(--sans);
   letter-spacing: 0.18px;
-  color-scheme: light dark;
+  color-scheme: light;
   color: var(--text);
   background: var(--bg);
   font-synthesis: none;
@@ -39,32 +39,16 @@
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #c8b8c4;
-    --text-h: #f6f1f4;
-    --bg: #241c22;
-    --border: #3d333a;
-    --code-bg: #2c2429;
-    --accent: #e4d3e6;
-    --accent-bg: rgba(228, 211, 230, 0.12);
-    --accent-border: rgba(228, 211, 230, 0.4);
-    --social-bg: rgba(44, 36, 41, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
-}
-
 #root {
   min-height: 100svh;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
   background: var(--yogi-bg);
+}
+
+html {
+  scrollbar-gutter: stable;
 }
 
 body {
