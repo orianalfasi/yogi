@@ -1,0 +1,27 @@
+.back-button {
+  align-self: flex-start;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #e6dfe5;
+  border-radius: 50%;
+  background: transparent;
+  color: #392f38;
+  font: inherit;
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.back-button:hover {
+  background: #eee4ed;
+}
+
+.back-button:focus-visible {
+  outline: 2px solid #745c7d;
+  outline-offset: 4px;
+}

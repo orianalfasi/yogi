@@ -1,0 +1,126 @@
+.session-screen {
+  --session-bg: #f8f6f3;
+  --session-heading: #392f38;
+  --session-muted: #877b85;
+  --session-accent: #745c7d;
+
+  box-sizing: border-box;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 100%;
+  min-height: 100svh;
+  min-height: 100dvh;
+  overflow-x: clip;
+  padding: calc(1.5rem + env(safe-area-inset-top))
+    calc(1.5rem + env(safe-area-inset-right))
+    calc(1.5rem + env(safe-area-inset-bottom))
+    calc(1.5rem + env(safe-area-inset-left));
+  background: var(--session-bg);
+  color: var(--session-muted);
+  color-scheme: light;
+  animation: session-fade 240ms ease both;
+}
+
+.session-column {
+  box-sizing: border-box;
+  width: min(100%, 28rem);
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.25rem;
+}
+
+.session-screen h1 {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(3rem, 10vw, 4.5rem);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  color: var(--session-heading);
+}
+
+.session-hint,
+.session-correction {
+  margin: 0;
+  max-width: 22rem;
+  line-height: 1.5;
+}
+
+.session-hint {
+  font-size: 1.05rem;
+  color: var(--session-muted);
+}
+
+.session-correction {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.35rem;
+  color: var(--session-heading);
+}
+
+.session-exit,
+.session-preview {
+  font: inherit;
+  cursor: pointer;
+}
+
+.session-exit {
+  width: min(100%, 16rem);
+  min-height: 3.25rem;
+  margin-top: 1.5rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--session-accent);
+  color: #ffffff;
+  font-size: 0.95rem;
+}
+
+.session-exit:hover {
+  background: #5c4566;
+}
+
+.session-preview {
+  border: 0;
+  padding: 0.5rem 0.75rem;
+  background: transparent;
+  color: var(--session-accent);
+  font-size: 0.85rem;
+}
+
+.session-preview:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.session-exit:focus-visible,
+.session-preview:focus-visible {
+  outline: 2px solid var(--session-accent);
+  outline-offset: 4px;
+}
+
+@keyframes session-fade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .session-screen {
+    animation: none;
+  }
+
+  .session-exit,
+  .session-preview {
+    transition: none;
+  }
+}
