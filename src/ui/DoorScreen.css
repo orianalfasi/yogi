@@ -1,4 +1,4 @@
-.door-screen {
+/* .door-screen {
   color-scheme: light;
   flex: 1;
   display: flex;
@@ -166,5 +166,283 @@
 @media (prefers-reduced-motion: reduce) {
   .door-column {
     animation: none;
+  }
+} */
+
+.door-screen {
+  --door-bg: #f8f6f3;
+  --door-heading: #392f38;
+  --door-muted: #877b85;
+  --door-accent: #745c7d;
+  --door-soft: #eee4ed;
+  --door-line: #e6dfe5;
+
+  color-scheme: light;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 100%;
+  min-height: 100vh;
+  min-height: 100svh;
+  overflow-x: clip;
+
+  background: var(--door-bg);
+  color: var(--door-heading);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Main layout */
+
+.door-column {
+  flex: 1;
+  width: min(100%, 28rem);
+  max-width: 100%;
+  min-height: 100svh;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: calc(clamp(2rem, 7vh, 4rem) + env(safe-area-inset-top)) 1.5rem
+    calc(clamp(2rem, 6vh, 4rem) + env(safe-area-inset-bottom));
+}
+
+/* Logo and brand */
+
+.door-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+
+  animation: door-fade-up 750ms ease-out both;
+}
+
+.door-logo {
+  position: relative;
+  width: 5rem;
+  height: 5rem;
+}
+
+.logo-svg,
+.logo-butterfly {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.logo-svg {
+  display: block;
+  overflow: visible;
+  width: 116%;
+  height: 116%;
+  left: -8%;
+  top: -8%;
+}
+
+.logo-butterfly {
+  object-fit: contain;
+  pointer-events: none;
+  transform: scale(1.36);
+}
+
+/* App name */
+
+.door-screen h1 {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(3.5rem, 10vw, 4.25rem);
+  font-weight: 400;
+  letter-spacing: -0.045em;
+  line-height: 1.1;
+  color: var(--door-heading);
+}
+
+/* Keep buttons toward the bottom */
+
+.door-gap {
+  flex: 1 1 auto;
+  width: 100%;
+  min-height: 5rem;
+}
+
+/* Actions */
+
+.door-actions {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+
+  width: min(100%, 22.5rem);
+  max-width: 100%;
+
+  animation: door-fade-up 750ms ease-out 350ms both;
+}
+
+.door-accounts {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  width: 100%;
+}
+
+/* Buttons */
+
+.door-account,
+.door-guest {
+  font: inherit;
+  cursor: pointer;
+}
+
+.door-account {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 3.25rem;
+  padding: 0.85rem 1.5rem;
+
+  border-radius: 999px;
+  border: 1px solid var(--door-accent);
+
+  font-size: 0.95rem;
+  font-weight: 400;
+  line-height: 1.3;
+  text-align: center;
+
+  transition:
+    background 220ms ease,
+    color 220ms ease,
+    transform 220ms ease;
+}
+
+.door-account-primary {
+  background: var(--door-accent);
+  color: #ffffff;
+}
+
+.door-account-secondary {
+  background: transparent;
+  color: var(--door-accent);
+}
+
+.door-account {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Guest link */
+
+.door-guest {
+  border: 0;
+  min-height: 2.75rem;
+  padding: 0.5rem 0.75rem;
+  background: transparent;
+
+  color: var(--door-accent);
+  font-size: 0.85rem;
+  line-height: 1.4;
+  text-align: center;
+
+  transition: color 200ms ease;
+}
+
+/* Hover effects */
+
+@media (hover: hover) and (pointer: fine) {
+  .door-account-primary:hover {
+    background: #5c4566;
+    transform: translateY(-2px);
+  }
+
+  .door-account-secondary:hover {
+    background: var(--door-soft);
+    transform: translateY(-2px);
+  }
+
+  .door-guest:hover {
+    color: #5c4566;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+}
+
+/* Keyboard focus */
+
+.door-account:focus-visible,
+.door-guest:focus-visible {
+  outline: 2px solid var(--door-accent);
+  outline-offset: 4px;
+}
+
+/* Accessible hidden note */
+
+.door-accounts-note {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Fade in animation */
+
+@keyframes door-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+  .door-column {
+    padding: calc(2.5rem + env(safe-area-inset-top)) 1.5rem
+      calc(2rem + env(safe-area-inset-bottom));
+  }
+
+  .door-logo {
+    width: 4.5rem;
+    height: 4.5rem;
+  }
+
+  .door-screen h1 {
+    font-size: 3.75rem;
+  }
+
+  .door-actions {
+    width: 100%;
+  }
+
+  .door-gap {
+    min-height: 3rem;
+  }
+}
+
+/* Reduced motion */
+
+@media (prefers-reduced-motion: reduce) {
+  .door-brand,
+  .door-actions {
+    animation: none;
+  }
+
+  .door-account,
+  .door-guest {
+    transition: none;
   }
 }

@@ -28,8 +28,10 @@ function AccountButton({
     </button>
   );
 }
-
-export function DoorScreen() {
+type DoorScreenProps = {
+  onGuestClick: () => void;
+};
+export function DoorScreen(props: DoorScreenProps) {
   return (
     <main className="door-screen">
       <div className="door-column">
@@ -51,7 +53,11 @@ export function DoorScreen() {
           <p id="door-accounts-note" className="door-accounts-note">
             Sign up and sign in are not available yet.
           </p>
-          <button type="button" className="door-guest">
+          <button
+            type="button"
+            className="door-guest"
+            onClick={props.onGuestClick}
+          >
             Continue as a guest
           </button>
         </div>
