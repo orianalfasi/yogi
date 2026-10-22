@@ -4,6 +4,7 @@ import "./PreparationScreen.css";
 type PreparationScreenProps = {
   onBackClick: () => void;
   onStartFlow: () => void;
+  failureSentence: string | null;
 };
 
 export default function PreparationScreen(props: PreparationScreenProps) {
@@ -19,6 +20,22 @@ export default function PreparationScreen(props: PreparationScreenProps) {
           <li>Keep your whole body in the frame.</li>
           <li>Turn the volume up.</li>
         </ol>
+
+        {props.failureSentence && (
+          <div className="preparation-failure" role="alert">
+            <span className="preparation-failure-icon" aria-hidden="true">
+              !
+            </span>
+
+            <div className="preparation-failure-content">
+              <p className="preparation-failure-title">Camera unavailable</p>
+              <p className="preparation-failure-message">
+                {props.failureSentence}
+              </p>
+            </div>
+          </div>
+        )}
+
         <button
           type="button"
           className="preparation-start"

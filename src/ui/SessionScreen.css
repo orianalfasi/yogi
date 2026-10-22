@@ -23,6 +23,7 @@
   color: var(--session-muted);
   color-scheme: light;
   animation: session-fade 240ms ease both;
+  position: relative;
 }
 
 .session-column {
@@ -34,6 +35,8 @@
   align-items: center;
   text-align: center;
   gap: 1.25rem;
+  position: relative;
+  z-index: 1;
 }
 
 .session-screen h1 {
@@ -123,4 +126,12 @@
   .session-preview {
     transition: none;
   }
+}
+.session-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transform: scaleX(-1);
 }

@@ -7,7 +7,7 @@ import {
   CompletionScreen,
   type CompletionRow,
 } from "./ui/CompletionScreen.tsx";
-
+import { openFrontCamera, stopCamera } from "./camera/useCamera.ts";
 type Screen = "door" | "practice" | "preparation" | "session" | "completion";
 
 const sampleRows: readonly CompletionRow[] = [
@@ -20,8 +20,12 @@ const sampleRows: readonly CompletionRow[] = [
   { name: "Tree", time: "10 seconds", correction: "Standing knee straight" },
 ];
 
+let spokenLine: SpeechSynthesisUtterance | null = null;
+
 export default function App() {
   const [screen, setScreen] = useState<Screen>("door");
+  const [cameraStream, setCameraStream] = useState<MediaStream | null>(null);
+  const [failureSentence, setFailureSentence] = useState<string | null>(null);
 
   switch (screen) {
     case "door":
@@ -36,15 +40,53 @@ export default function App() {
     case "preparation":
       return (
         <PreparationScreen
-          onBackClick={() => setScreen("practice")}
-          onStartFlow={() => setScreen("session")}
+          onBackClick={() => {
+            setFailureSentence(null);
+            setScreen("practice");
+          }}
+          onStartFlow={async () => {
+            spokenLine = new SpeechSynthesisUtterance("Mountain hello.");
+            window.speechSynthesis.resume();
+            window.speechSynthesis.speak(spokenLine);
+            try {
+              const stream = await openFrontCamera();
+              setFailureSentence(null);
+              setCameraStream(stream);
+              setScreen("session");
+            } catch (error) {
+              if (error instanceof DOMException) {
+                if (error.name === "NotAllowedError") {
+                  setFailureSentence(
+                    "Camera is blocked. On iPhone, go to Settings > Safari > Camera.",
+                  );
+                } else if (error.name === "NotFoundError") {
+                  setFailureSentence("No camera was found.");
+                } else {
+                  setFailureSentence("The camera could not be opened.");
+                }
+              }
+            }
+          }}
+          failureSentence={failureSentence}
         />
       );
     case "session":
+      if (!cameraStream) {
+        return null;
+      }
       return (
         <SessionScreen
-          onExit={() => setScreen("practice")}
-          onPreviewCompletion={() => setScreen("completion")}
+          onExit={() => {
+            stopCamera(cameraStream);
+            setCameraStream(null);
+            setScreen("practice");
+          }}
+          onPreviewCompletion={() => {
+            stopCamera(cameraStream);
+            setCameraStream(null);
+            setScreen("completion");
+          }}
+          cameraStream={cameraStream}
         />
       );
     case "completion":
