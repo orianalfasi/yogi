@@ -1,0 +1,70 @@
+{
+  "id": "mountain",
+  "view": "front",
+  "hiddenSentence": "Take a step back until your whole body is visible in the frame.",
+  "rules": [
+    {
+      "joint": "leftKnee",
+      "min": 160,
+      "max": 180,
+      "sentence": "Straighten your left leg.",
+      "priority": 10
+    },
+    {
+      "joint": "rightKnee",
+      "min": 160,
+      "max": 180,
+      "sentence": "Straighten your right leg.",
+      "priority": 10
+    },
+    {
+      "joint": "leftElbow",
+      "min": 155,
+      "max": 180,
+      "sentence": "Relax and straighten your left arm.",
+      "priority": 6
+    },
+    {
+      "joint": "rightElbow",
+      "min": 155,
+      "max": 180,
+      "sentence": "Relax and straighten your right arm.",
+      "priority": 6
+    },
+    {
+      "joint": "leftHip",
+      "min": 160,
+      "max": 180,
+      "sentence": "Stand tall through your left hip.",
+      "priority": 8
+    },
+    {
+      "joint": "rightHip",
+      "min": 160,
+      "max": 180,
+      "sentence": "Stand tall through your right hip.",
+      "priority": 8
+    },
+    {
+      "joint": "leftShoulder",
+      "min": 0,
+      "max": 25,
+      "sentence": "Bring your left arm closer to your side.",
+      "priority": 5
+    },
+    {
+      "joint": "rightShoulder",
+      "min": 0,
+      "max": 25,
+      "sentence": "Bring your right arm closer to your side.",
+      "priority": 5
+    },
+    {
+      "joint": "torsoTilt",
+      "min": -10,
+      "max": 10,
+      "sentence": "Bring your torso back to upright.",
+      "priority": 9
+    }
+  ]
+}
